@@ -7,40 +7,52 @@ let isPlayerChoiceValid = false;
 // SET computer choice of rps
 // TODO: make this a function
 
-computerChoice = Math.floor(Math.random()*3)+1;
-if (computerChoice == 1) {
-    computerChoice = "rock";
-} else if (computerChoice == 2) {
-    computerChoice = "paper";
-} else if (computerChoice == 3) {
-    computerChoice = "scissors";
-}
-console.log(`Computer choice = ` + computerChoice);
-
-// OBTAIN player choice for rps
-
-while (isPlayerChoiceValid == false) {
-    playerChoice = prompt('Please choose "rock", "paper", or "scissors".');
-    console.log("playerChoice = " + playerChoice + ' which is a type of ' + typeof(playerChoice));
-
-    if (playerChoice == null ||
-    playerChoice == undefined ||
-    playerChoice == "" || isNaN(playerChoice) == false) {
-        console.log("wut");
-        alert(`Hmm... try again...`);
-        isPlayerChoiceValid = false;
-    } else if (String(playerChoice.toLowerCase()) == "rock" ||
-        String(playerChoice.toLowerCase()) == "paper" ||
-        String(playerChoice.toLowerCase()) == "scissors") {
-            playerChoice = playerChoice.toLowerCase();
-            isPlayerChoiceValid = true;
-    } else {
-        alert(`That's not one of the choices...`);
-        isPlayerChoiceValid = false;
+function setComputerChoice () {
+    // SET computer choice of rps
+    let choice = Math.floor(Math.random()*3)+1;
+    if (choice == 1) {
+        console.log(`Computer choice = rock`);
+        return `rock`;
+    } else if (choice == 2) {
+        console.log(`Computer choice = paper`);
+        return `paper`;
+    } else if (choice == 3) {
+        console.log(`Computer choice = scissors`);
+        return `scissors`;
     }
 }
 
-function didPlayerWin() {
+// OBTAIN player choice for rps
+
+function getPlayerChoice () {
+    let isChoiceValid = false;
+    let choice;
+
+    while (isChoiceValid == false) {
+        choice = prompt(`Please choose "rock", "paper", or "scissors".`);
+
+        if (choice == null ||
+        choice == undefined ||
+        isNaN(choice) == false) {
+            console.log(`wut`);
+            alert(`Hmm... Try again...`);
+            isChoiceValid = false;
+        } else if (String(choice.toLowerCase()) == `rock` ||
+        String(choice.toLowerCase()) == `paper` ||
+        String(choice.toLowerCase()) == `scissors`) {
+            isChoiceValid = true;
+            console.log(`Thanks for picking!`);
+            console.log(`Player choice = ` + choice.toLowerCase());
+            return choice.toLowerCase();
+        } else {
+            alert(`That's not one of the choices...`);
+            isChoiceValid = false;
+        }
+    }
+
+}
+
+function didPlayerWin(playerChoice, computerChoice) {
     if (playerChoice == computerChoice) {
         // IF there is a tie, THEN start over with SET computer choice and OBTAIN player choice
         console.log("It's a tie.")
@@ -60,4 +72,4 @@ function didPlayerWin() {
     }
 }
 
-didPlayerWin();
+didPlayerWin(getPlayerChoice(),setComputerChoice());
