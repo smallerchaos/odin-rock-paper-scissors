@@ -5,9 +5,9 @@ let playerChoice;
 let isPlayerChoiceValid = false;
 
 // SET computer choice of rps
+// TODO: make this a function
 
 computerChoice = Math.floor(Math.random()*3)+1;
-console.log(computerChoice);
 if (computerChoice == 1) {
     computerChoice = "rock";
 } else if (computerChoice == 2) {
@@ -15,7 +15,7 @@ if (computerChoice == 1) {
 } else if (computerChoice == 3) {
     computerChoice = "scissors";
 }
-console.log(computerChoice);
+console.log(`Computer choice = ` + computerChoice);
 
 // OBTAIN player choice for rps
 
@@ -32,7 +32,6 @@ while (isPlayerChoiceValid == false) {
     } else if (String(playerChoice.toLowerCase()) == "rock" ||
         String(playerChoice.toLowerCase()) == "paper" ||
         String(playerChoice.toLowerCase()) == "scissors") {
-            console.log("Yay! Thanks for picking something!");
             playerChoice = playerChoice.toLowerCase();
             isPlayerChoiceValid = true;
     } else {
@@ -40,3 +39,25 @@ while (isPlayerChoiceValid == false) {
         isPlayerChoiceValid = false;
     }
 }
+
+function didPlayerWin() {
+    if (playerChoice == computerChoice) {
+        // IF there is a tie, THEN start over with SET computer choice and OBTAIN player choice
+        console.log("It's a tie.")
+        return null;
+    }
+
+    // COMPARE computer choice to player choice
+    // DETERMINE if computer or player wins
+    else if (playerChoice == `rock` && computerChoice == `scissors` ||
+    playerChoice == `paper` && computerChoice == `rock` ||
+    playerChoice == `scissors` && computerChoice == `paper`) {
+        console.log(`Player wins!`);
+        return true;
+    } else {
+        console.log(`Computer wins. :/`);
+        return false;
+    }
+}
+
+didPlayerWin();
