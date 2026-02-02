@@ -169,9 +169,4 @@ function game (winner) {
     return scores;
 }
 
-// WHILE all rounds are not complete, keep playing the game
-// function receives true or false and true increases player score and false increases computer score
-// WHEN player score + computer score = number of desired rounds, game is over
-
 runRounds(getNumberOfRounds());
-// game(didPlayerWin(getPlayerChoice(),setComputerChoice()));
