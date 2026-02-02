@@ -56,8 +56,9 @@ function getPlayerChoice () {
 function didPlayerWin(playerChoice, computerChoice) {
 
     // IF there is a tie, THEN start over with SET computer choice and OBTAIN player choice
+    // This recursive function also doesn't work so let's assume you don't get a tie because, for some reason, the score returns [0,0,0] when you get a tie...
     if (playerChoice == computerChoice) {
-        alert(`Computer also chose ` + computerChoice + `. It's a tie! Try again.`)
+        alert(`You chose ${playerChoice} and computer also chose ${computerChoice}. It's a tie! Try again.`)
         console.log(`It's a tie!`)
         didPlayerWin(getPlayerChoice(),setComputerChoice());
 
@@ -65,40 +66,112 @@ function didPlayerWin(playerChoice, computerChoice) {
     } else if (playerChoice == `rock` && computerChoice == `scissors` ||
     playerChoice == `paper` && computerChoice == `rock` ||
     playerChoice == `scissors` && computerChoice == `paper`) {
-        alert(`Computer chose ` + computerChoice + `. You win!`)
+        alert(`Computer chose ${computerChoice}. You win!`)
         console.log(`You won!`)
         return true;
     
     // ELSE if player didn't win and it isn't a tie, then computer won
     } else {
-        alert(`Computer chose ` + computerChoice + `. Computer won. :(`)
+        alert(`Computer chose ${computerChoice}. Computer won. :(`)
         console.log(`Computer won`);
         return false;
     }
     // ENDIF
 }
 
+// runRounds(getNumberOfRounds(), game(didPlayerWin(getPlayerChoice(),setComputerChoice())));
+
+
+
+// OBTAIN number of rounds
+function getNumberOfRounds () {
+    let rounds;
+    let isRoundsValid = false;
+
+    // GET number of rounds
+    rounds = prompt(`How many rounds do you want to play?`);
+
+    // VALIDATE if the rounds number is actually a number
+    while (isRoundsValid == false) {
+
+        // IF rounds is not a number, null, or undefined, prompt a round
+        // This recursive function doesn't work so let's assume the user inputs a number for now
+        if (isNaN(+rounds) == true ||
+        rounds == null ||
+        rounds == undefined ||
+        rounds == "") {
+            console.log(`That's not a number...`);
+            isRoundsValid = false;
+            getNumberOfRounds();
+        // ELSE it's a number and that's what we want
+        } else if (isNaN(+rounds) == false) {
+            isRoundsValid = true;
+            console.log(`So you want to play ${rounds} rounds, huh?`);
+            return +rounds;
+        }
+    }
+}
+
+// DETERMINE if another game needs to be run in order to fulfill the number of rounds OBTAINED from user
+function runRounds (rounds) {
+    console.log(`Starting runRounds`);
+    const totalRounds = rounds;
+    let isGameOver = false;
+    let playerScore = 0;
+    let computerScore = 0;
+    let totalScore = 0;
+    let gameOutcome;
+
+    // WHILE the number of requisite rounds is not fulfilled, run games
+    while (isGameOver == false) {
+        gameOutcome = game(didPlayerWin(getPlayerChoice(),setComputerChoice()));
+        playerScore += gameOutcome[0];
+        computerScore += gameOutcome[1];
+        totalScore += gameOutcome[0] + gameOutcome[1];
+        console.log(`In runRounds, gameOtucome = ${gameOutcome}, playerScore = ${playerScore}, computerScore = ${computerScore}, totalScore = ${totalScore}`);
+
+        console.log(`isGameOver = ${isGameOver}`);
+        // IF the totalScore (computer + player scores = number of rounds) < requisite rounds, continue running games
+        if (totalScore < totalRounds) {
+            console.log(`total Score in if runRounds = ${totalScore}`);
+            isGameOver = false;
+            console.log(`Keep going! playerScore < gameScore in runRounds`);
+        
+        // ELSE totalScore = requisite rounds, so you can stop running games
+        } else {
+            isGameOver = true;
+            console.log(`Bro, it's over. playerScore >= gameScore in runRounds`);
+        }
+    } ;
+}
+
+// COMPUTE the computer and player score from a single game
 function game (winner) {
+    console.log(`Starting game...`)
     let playerScore = 0;
     let computerScore = 0;
 
     // IF true, add score to player
     if (winner == true) {
         playerScore ++;
+        console.log(`playerScore in game = ${playerScore}`);
     } 
     // ELSE IF false, add score to computer
     else if (winner == false) {
         computerScore ++;
+        console.log(`computerScore in game = ${computerScore}`);
     }
     //´ENDIF
 
     // RETURN computer score and player score
-    console.log(`playerScore = ` + playerScore);
-    console.log(`computerScore = ` + computerScore);
-    console.log(`totalScore = ` + (playerScore + computerScore));
-    return (playerScore, computerScore, playerScore + computerScore);
+    const scores = [playerScore, computerScore];
+    console.log(`Game finished. Score = ${scores} with type of ${typeof(scores)}`);
+    return scores;
 }
 
 // WHILE all rounds are not complete, keep playing the game
 // function receives true or false and true increases player score and false increases computer score
 // WHEN player score + computer score = number of desired rounds, game is over
+
+runRounds(getNumberOfRounds());
+// game(didPlayerWin(getPlayerChoice(),setComputerChoice()));
