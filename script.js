@@ -126,7 +126,7 @@ function setComputerChoice () {
     }
 }
 
-// OBTAIN player choice for rps
+// GET player choice for rps
 function getPlayerChoice () {
     let choice;
     
