@@ -34,6 +34,7 @@ function initiateGetRounds () {
 
     getRounds.appendChild(getRoundsTitle);
     roundsInput.type = "number";
+    roundsInput.min = "1";
     getRounds.appendChild(roundsInput);
 
     const submitRounds = document.createElement("button");
@@ -49,8 +50,7 @@ function initiateGetRounds () {
 }
 
 // GET total rounds logic
-function getNumberOfRounds (event) {
-    // event.preventDefault();
+function getNumberOfRounds () {
     let rounds;
     let isRoundsValid = false;
 
