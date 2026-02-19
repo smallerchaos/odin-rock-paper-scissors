@@ -20,6 +20,10 @@ current.className = "current-round";
 const total = document.createElement("span");
 total.className = "total-rounds";
 
+// RPS HTML
+const rpsContainer = document.createElement("div");
+rpsContainer.className = "rps-container";
+
 // Universal variables
 let totalRounds;
 
@@ -99,6 +103,8 @@ function initiateDisplayRounds() {
 
     displayRounds.appendChild(roundsCountainer);
     body.appendChild(displayRounds);
+
+    getPlayerChoice();
 }
 
 
@@ -122,36 +128,36 @@ function setComputerChoice () {
 
 // OBTAIN player choice for rps
 function getPlayerChoice () {
-    let isChoiceValid = false;
     let choice;
+    
+    const rockButton = document.createElement("button");
+    rockButton.textContent = "Rock";
+    rockButton.addEventListener("click", () => {
+        console.log(`you clicked rock`);
+        choice = "rock";
+        console.log(`your choice is ${choice}`);
+    });
+    rpsContainer.appendChild(rockButton);
 
-    // WHILE player's choice is invalid OBTAIN another input from player
-    while (isChoiceValid == false) {
-        choice = prompt(`Please choose "rock", "paper", or "scissors".`);
+    const paperButton = document.createElement("button");
+    paperButton.textContent = "Paper";
+    paperButton.addEventListener("click", () => {
+        console.log(`you clicked paper`);
+        choice = "paper";
+        console.log(`your choice is ${choice}`);
+    });
+    rpsContainer.appendChild(paperButton);
 
-        // IF player choice is invalid, prompt to try again
-        if (choice == null ||
-        choice == undefined ||
-        isNaN(choice) == false) {
-            alert(`Hmm... Try again...`);
-            isChoiceValid = false;
+    const scissorsButton = document.createElement("button");
+    scissorsButton.textContent = "Scissors";
+    scissorsButton.addEventListener("click", () => {
+        console.log(`you clicked scissors`);
+        choice = "scissors";
+        console.log(`your choice is ${choice}`);
+    });
+    rpsContainer.appendChild(scissorsButton);
 
-        // ELSEIF player choice is valid, return true and end while
-        } else if (String(choice.toLowerCase()) == `rock` ||
-        String(choice.toLowerCase()) == `paper` ||
-        String(choice.toLowerCase()) == `scissors`) {
-            isChoiceValid = true;
-            console.log(`You chose ` + choice.toLowerCase());
-            return choice.toLowerCase();
-
-        // ELSE if the player types anything else, prompt to try again
-        } else {
-            alert(`That's not one of the choices...`);
-            isChoiceValid = false;
-        }
-    }
-    // ENDWHILE
-
+    body.appendChild(rpsContainer);
 }
 
 // DETERMINE if computer or player wins
