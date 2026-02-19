@@ -1,6 +1,47 @@
 // Note: rock, paper, scissors henceforth referred to as "rps"
 
-// OBTAIN number of rounds
+// IF Javascript is enabled, remove the no Javascript text.
+const body = document.querySelector("body");
+const noJs = document.getElementById("no-javascript");
+noJs.remove();
+
+// HTML Elements variables
+// GET rounds HTML
+const getRounds = document.createElement("div");
+getRounds.className = "get-rounds";
+const roundsInput = document.createElement("input");
+roundsInput.className = "rounds-input";
+
+// DISPLAY rounds HTML
+const displayRounds = document.createElement("div");
+displayRounds.className = "display-rounds";
+const current = document.createElement("span");
+current.className = "current-round";
+const total = document.createElement("span");
+total.className = "total-rounds";
+
+// Universal variables
+let totalRounds;
+
+// DISPLAY components to GET total rounds from UI
+function initiateGetRounds () {
+    const getRoundsTitle = document.createElement("h2");
+    getRoundsTitle.textContent = "How many rounds do you want to play?";
+    getRounds.appendChild(getRoundsTitle);
+    getRounds.appendChild(roundsInput);
+    const submitRounds = document.createElement("button");
+    submitRounds.className = "submit-button";
+    submitRounds.textContent = "Submit";
+    getRounds.appendChild(submitRounds);
+    submitRounds.addEventListener("click", () => {
+        totalRounds = getNumberOfRounds();
+        initiateDisplayRounds();
+    });
+
+    body.appendChild(getRounds);
+}
+
+// GET total rounds logic
 function getNumberOfRounds (event) {
     // event.preventDefault();
     let rounds;
@@ -16,7 +57,7 @@ function getNumberOfRounds (event) {
 
         // IF rounds is not a number, null, or undefined, prompt a round
         // This recursive function doesn't work so let's assume the user inputs a number for now
-        if (isNaN(+rounds) == true ||
+        if (Number.isNaN(+rounds) == true ||
         rounds == null ||
         rounds == undefined ||
         rounds == "") {
@@ -24,7 +65,7 @@ function getNumberOfRounds (event) {
             isRoundsValid = false;
             getNumberOfRounds();
         // ELSE it's a number and that's what we want
-        } else if (isNaN(+rounds) == false) {
+        } else if (Number.isNaN(+rounds) == false) {
             isRoundsValid = true;
             console.log(`So you want to play ${rounds} rounds, huh?`);
             return +rounds;
@@ -32,28 +73,31 @@ function getNumberOfRounds (event) {
     }
 }
 
-// GET rounds from UI
-const body = document.querySelector("body");
-const noJs = document.getElementById("no-javascript");
-noJs.remove();
+// DISPLAY rounds in UI
+function initiateDisplayRounds() {
+    getRounds.remove();
 
-const getRounds = document.createElement("div");
-getRounds.className = "getRounds";
+    const displayRoundsTitle = document.createElement("h2");
+    displayRoundsTitle.textContent = "Rounds";
+    displayRounds.appendChild(displayRoundsTitle);
 
-const getRoundsTitle = document.createElement("h2");
-getRoundsTitle.textContent = "How many rounds do you want to play?";
-getRounds.appendChild(getRoundsTitle);
+    const roundsCountainer = document.createElement("div");
+    roundsCountainer.className = "rounds-container";
 
-const roundsInput = document.createElement("input");
-getRounds.appendChild(roundsInput);
+    current.textContent = 1;
+    roundsCountainer.appendChild(current);
 
-const submitRounds = document.createElement("button");
-submitRounds.textContent = "Submit";
-getRounds.appendChild(submitRounds);
-// Click logic for Submit button
-submitRounds.addEventListener("click", getNumberOfRounds);
+    const ofText = document.createElement("span");
+    ofText.textContent = " of ";
+    roundsCountainer.appendChild(ofText);
 
-body.appendChild(getRounds);
+    total.textContent = totalRounds;
+    roundsCountainer.appendChild(total);
+
+    displayRounds.appendChild(roundsCountainer);
+    body.appendChild(displayRounds);
+}
+
 
 // SET computer choice of rps
 function setComputerChoice () {
@@ -193,8 +237,6 @@ function game (winner) {
     return scores;
 }
 
-
-
-// DISPLAY rounds in UI
-
 // runRounds(getNumberOfRounds());
+
+initiateGetRounds();
