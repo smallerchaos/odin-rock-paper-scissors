@@ -1,5 +1,60 @@
 // Note: rock, paper, scissors henceforth referred to as "rps"
 
+// OBTAIN number of rounds
+function getNumberOfRounds (event) {
+    // event.preventDefault();
+    let rounds;
+    let isRoundsValid = false;
+
+    // GET number of rounds
+    // rounds = prompt(`How many rounds do you want to play?`);
+    const value = roundsInput.value;
+    rounds = value;
+
+    // VALIDATE if the rounds number is actually a number
+    while (isRoundsValid == false) {
+
+        // IF rounds is not a number, null, or undefined, prompt a round
+        // This recursive function doesn't work so let's assume the user inputs a number for now
+        if (isNaN(+rounds) == true ||
+        rounds == null ||
+        rounds == undefined ||
+        rounds == "") {
+            console.log(`That's not a number...`);
+            isRoundsValid = false;
+            getNumberOfRounds();
+        // ELSE it's a number and that's what we want
+        } else if (isNaN(+rounds) == false) {
+            isRoundsValid = true;
+            console.log(`So you want to play ${rounds} rounds, huh?`);
+            return +rounds;
+        }
+    }
+}
+
+// GET rounds from UI
+const body = document.querySelector("body");
+const noJs = document.getElementById("no-javascript");
+noJs.remove();
+
+const getRounds = document.createElement("div");
+getRounds.className = "getRounds";
+
+const getRoundsTitle = document.createElement("h2");
+getRoundsTitle.textContent = "How many rounds do you want to play?";
+getRounds.appendChild(getRoundsTitle);
+
+const roundsInput = document.createElement("input");
+getRounds.appendChild(roundsInput);
+
+const submitRounds = document.createElement("button");
+submitRounds.textContent = "Submit";
+getRounds.appendChild(submitRounds);
+// Click logic for Submit button
+submitRounds.addEventListener("click", getNumberOfRounds);
+
+body.appendChild(getRounds);
+
 // SET computer choice of rps
 function setComputerChoice () {
     // COMPUTE a random number
@@ -81,37 +136,6 @@ function didPlayerWin(playerChoice, computerChoice) {
 
 // runRounds(getNumberOfRounds(), game(didPlayerWin(getPlayerChoice(),setComputerChoice())));
 
-
-
-// OBTAIN number of rounds
-function getNumberOfRounds () {
-    let rounds;
-    let isRoundsValid = false;
-
-    // GET number of rounds
-    rounds = prompt(`How many rounds do you want to play?`);
-
-    // VALIDATE if the rounds number is actually a number
-    while (isRoundsValid == false) {
-
-        // IF rounds is not a number, null, or undefined, prompt a round
-        // This recursive function doesn't work so let's assume the user inputs a number for now
-        if (isNaN(+rounds) == true ||
-        rounds == null ||
-        rounds == undefined ||
-        rounds == "") {
-            console.log(`That's not a number...`);
-            isRoundsValid = false;
-            getNumberOfRounds();
-        // ELSE it's a number and that's what we want
-        } else if (isNaN(+rounds) == false) {
-            isRoundsValid = true;
-            console.log(`So you want to play ${rounds} rounds, huh?`);
-            return +rounds;
-        }
-    }
-}
-
 // DETERMINE if another game needs to be run in order to fulfill the number of rounds OBTAINED from user
 function runRounds (rounds) {
     console.log(`Starting runRounds`);
@@ -169,4 +193,8 @@ function game (winner) {
     return scores;
 }
 
-runRounds(getNumberOfRounds());
+
+
+// DISPLAY rounds in UI
+
+// runRounds(getNumberOfRounds());
