@@ -27,8 +27,11 @@ let totalRounds;
 function initiateGetRounds () {
     const getRoundsTitle = document.createElement("h2");
     getRoundsTitle.textContent = "How many rounds do you want to play?";
+
     getRounds.appendChild(getRoundsTitle);
+    roundsInput.type = "number";
     getRounds.appendChild(roundsInput);
+
     const submitRounds = document.createElement("button");
     submitRounds.className = "submit-button";
     submitRounds.textContent = "Submit";
