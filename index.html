@@ -2,12 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    
+    <link rel="stylesheet" href="./style.css">
     <title>Rock Paper Scissors</title>
 </head>
-<body style="background-color: darkslateblue;">
+<body>
     <h1>Rock Paper Scissors!</h1>
     <p id="no-javascript" style="color: white;">You need JavaScript for this to work. :'&#40;</p>
+    
+    <div class="get-rounds-container hidden">
+        <h2>How many rounds would you like to play?</h2>
+        <input class="rounds-input" type="number" min="1">
+        <button class="submit-rounds">Submit</button>
+    </div>
+
+    <div class="game-info-container hidden">
+        <div class="rounds-container">
+            <span>Round</span>
+            <span class="current-round">0</span>
+            <span> of </span>
+            <span class="total-rounds">0</span>
+        </div>
+
+        <div class="player-score-container">
+            <span>Your score</span>
+            <span class="player-score score">0</span>
+        </div>
+
+        <div class="computer-score-container">
+            <span>Computer score</span>
+            <span class="computer-score score">0</span>
+        </div>
+    </div>
+
+    <div class="choice-container hidden">
+        <div class="player-choice-container">
+            <span>You</span>
+            <span class="player-choice">Rock</span>
+        </div>
+
+        <span>vs</span>
+
+        <div class="computer-choice-container">
+            <span>Computer</span>
+            <span class="computer-choice">Scissors</span>
+        </div>
+    </div>
+
+    <div class="result-container hidden">
+        <span class="result">You won!</span>
+        <button class="next-round">Next</button>
+    </div>
+
+    <div class="game-over-container hidden">
+        <span class="game-result">You won the game!</span>
+        <button class="new-game">New Game</button>
+    </div>
+
     <script src="./script.js"></script>
 </body>
 </html>
