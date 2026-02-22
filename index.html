@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./style.css">
+    <script src="./script.js" defer></script>
     <title>Rock Paper Scissors</title>
 </head>
 <body>
     <h1>Rock Paper Scissors!</h1>
-    <p id="no-javascript" style="color: white;">You need JavaScript for this to work. :'&#40;</p>
+    <p id="no-javascript">You need JavaScript for this to work. :'&#40;</p>
     
     <div class="get-rounds-container hidden">
-        <h2>How many rounds would you like to play?</h2>
+        <p>How many rounds would you like to play?</p>
         <input class="rounds-input" type="number" min="1">
         <button class="submit-rounds">Submit</button>
     </div>
@@ -32,6 +33,12 @@
             <span>Computer score</span>
             <span class="computer-score score">0</span>
         </div>
+    </div>
+
+    <div class="rps-container hidden">
+        <button class="rock">Rock</button>
+        <button class="paper">Paper</button>
+        <button class="scissors">Scissors</button>
     </div>
 
     <div class="choice-container hidden">
@@ -57,7 +64,5 @@
         <span class="game-result">You won the game!</span>
         <button class="new-game">New Game</button>
     </div>
-
-    <script src="./script.js"></script>
 </body>
 </html>

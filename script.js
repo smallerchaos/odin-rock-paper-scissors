@@ -6,48 +6,68 @@ const noJs = document.getElementById("no-javascript");
 noJs.remove();
 
 // HTML Elements variables
-// GET rounds HTML
-const getRounds = document.createElement("div");
-getRounds.className = "get-rounds";
-const roundsInput = document.createElement("input");
-roundsInput.className = "rounds-input";
+// Get rounds HTML
 
-// DISPLAY rounds HTML
-const displayRounds = document.createElement("div");
-displayRounds.className = "display-rounds";
-const current = document.createElement("span");
-current.className = "current-round";
-const total = document.createElement("span");
-total.className = "total-rounds";
+const getRoundsContainer = document.querySelector(".get-rounds-container")
+const roundsInput = document.querySelector(".rounds-input");
+const submitRoundsButton = document.querySelector(".submit-rounds");
+submitRoundsButton.addEventListener("click", () => {
+    console.log("You clicked the submit button! :0")
+});
+
+// // Display rounds HTML
+const roundsContainer = document.querySelector(".rounds-container");
+const currentRoundElement = document.querySelector(".current-round");
+const totalRoundsElement = document.querySelector(".total-rounds");
 
 // RPS HTML
-const rpsContainer = document.createElement("div");
-rpsContainer.className = "rps-container";
+const rpsContainer = document.querySelector(".rps-container")
+const rockButton = document.querySelector(".rock");
+const paperButton = document.querySelector(".paper");
+const scissorsButton = document.querySelector(".scissors");
+
+// Scores HTML
+const playerScoreElement = document.querySelector(".player-score");
+const computerScoreElement = document.querySelector(".computer-score");
+
+// Choices HTML
+const choiceContainer = document.querySelector(".choice-container");
+const playerChoiceElement = document.querySelector(".player-choice");
+const computerChoiceElement = document.querySelector(".computer-choice");
+
+// //Results HTML
+const resultContainer = document.querySelector(".result-container");
+const resultElement = document.querySelector(".result");
+const nextRoundButton = document.querySelector(".next-round");
+
+// // Game Over HTML
+const gameResultElement = document.querySelector(".game-result");
+const newGameButton = document.querySelector(".new-game");
 
 // Universal variables
 let totalRounds;
 
 // DISPLAY components to GET total rounds from UI
-function initiateGetRounds () {
-    const getRoundsTitle = document.createElement("h2");
-    getRoundsTitle.textContent = "How many rounds do you want to play?";
+// function initiateGetRounds () {
+//     const getRoundsTitle = document.createElement("h2");
+//     getRoundsTitle.textContent = "How many rounds do you want to play?";
 
-    getRounds.appendChild(getRoundsTitle);
-    roundsInput.type = "number";
-    roundsInput.min = "1";
-    getRounds.appendChild(roundsInput);
+//     getRounds.appendChild(getRoundsTitle);
+//     roundsInput.type = "number";
+//     roundsInput.min = "1";
+//     getRounds.appendChild(roundsInput);
 
-    const submitRounds = document.createElement("button");
-    submitRounds.className = "submit-button";
-    submitRounds.textContent = "Submit";
-    getRounds.appendChild(submitRounds);
-    submitRounds.addEventListener("click", () => {
-        totalRounds = getNumberOfRounds();
-        initiateDisplayRounds();
-    });
+//     const submitRounds = document.createElement("button");
+//     submitRounds.className = "submit-button";
+//     submitRounds.textContent = "Submit";
+//     getRounds.appendChild(submitRounds);
+//     submitRounds.addEventListener("click", () => {
+//         totalRounds = getNumberOfRounds();
+//         initiateDisplayRounds();
+//     });
 
-    body.appendChild(getRounds);
-}
+//     body.appendChild(getRounds);
+// }
 
 // GET total rounds logic
 function getNumberOfRounds () {
@@ -81,31 +101,31 @@ function getNumberOfRounds () {
 }
 
 // DISPLAY rounds in UI
-function initiateDisplayRounds() {
-    getRounds.remove();
+// function initiateDisplayRounds() {
+//     getRounds.remove();
 
-    const displayRoundsTitle = document.createElement("h2");
-    displayRoundsTitle.textContent = "Rounds";
-    displayRounds.appendChild(displayRoundsTitle);
+//     const displayRoundsTitle = document.createElement("h2");
+//     displayRoundsTitle.textContent = "Rounds";
+//     displayRounds.appendChild(displayRoundsTitle);
 
-    const roundsCountainer = document.createElement("div");
-    roundsCountainer.className = "rounds-container";
+//     const roundsCountainer = document.createElement("div");
+//     roundsCountainer.className = "rounds-container";
 
-    current.textContent = 1;
-    roundsCountainer.appendChild(current);
+//     current.textContent = 1;
+//     roundsCountainer.appendChild(current);
 
-    const ofText = document.createElement("span");
-    ofText.textContent = " of ";
-    roundsCountainer.appendChild(ofText);
+//     const ofText = document.createElement("span");
+//     ofText.textContent = " of ";
+//     roundsCountainer.appendChild(ofText);
 
-    total.textContent = totalRounds;
-    roundsCountainer.appendChild(total);
+//     total.textContent = totalRounds;
+//     roundsCountainer.appendChild(total);
 
-    displayRounds.appendChild(roundsCountainer);
-    body.appendChild(displayRounds);
+//     displayRounds.appendChild(roundsCountainer);
+//     body.appendChild(displayRounds);
 
-    getPlayerChoice();
-}
+//     getPlayerChoice();
+// }
 
 
 // SET computer choice of rps
@@ -248,4 +268,4 @@ function game (winner) {
 
 // runRounds(getNumberOfRounds());
 
-initiateGetRounds();
+// initiateGetRounds();
