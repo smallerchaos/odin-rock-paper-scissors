@@ -11,9 +11,11 @@ noJs.remove();
 const getRoundsContainer = document.querySelector(".get-rounds-container")
 const roundsInput = document.querySelector(".rounds-input");
 const submitRoundsButton = document.querySelector(".submit-rounds");
-submitRoundsButton.addEventListener("click", () => {
-    console.log("You clicked the submit button! :0")
+submitRoundsButton.addEventListener("click", (event) => {
+    totalRounds = getNumberOfRounds();
+    console.log(`totalRounds = ${totalRounds}`);
 });
+const roundsInputErrorElement = document.querySelector(".get-rounds-container .error-message");
 
 // // Display rounds HTML
 const roundsContainer = document.querySelector(".rounds-container");
@@ -61,57 +63,17 @@ newGameButton.addEventListener("click", () => {
 
 // Universal variables
 let totalRounds;
-
-// DISPLAY components to GET total rounds from UI
-// function initiateGetRounds () {
-//     const getRoundsTitle = document.createElement("h2");
-//     getRoundsTitle.textContent = "How many rounds do you want to play?";
-
-//     getRounds.appendChild(getRoundsTitle);
-//     roundsInput.type = "number";
-//     roundsInput.min = "1";
-//     getRounds.appendChild(roundsInput);
-
-//     const submitRounds = document.createElement("button");
-//     submitRounds.className = "submit-button";
-//     submitRounds.textContent = "Submit";
-//     getRounds.appendChild(submitRounds);
-//     submitRounds.addEventListener("click", () => {
-//         totalRounds = getNumberOfRounds();
-//         initiateDisplayRounds();
-//     });
-
-//     body.appendChild(getRounds);
-// }
+getRoundsContainer.classList.toggle("hidden");
 
 // GET total rounds logic
 function getNumberOfRounds () {
-    let rounds;
-    let isRoundsValid = false;
-
-    // GET number of rounds
-    // rounds = prompt(`How many rounds do you want to play?`);
-    const value = roundsInput.value;
-    rounds = value;
-
-    // VALIDATE if the rounds number is actually a number
-    while (isRoundsValid == false) {
-
-        // IF rounds is not a number, null, or undefined, prompt a round
-        // This recursive function doesn't work so let's assume the user inputs a number for now
-        if (Number.isNaN(+rounds) == true ||
-        rounds == null ||
-        rounds == undefined ||
-        rounds == "") {
-            console.log(`That's not a number...`);
-            isRoundsValid = false;
-            getNumberOfRounds();
-        // ELSE it's a number and that's what we want
-        } else if (Number.isNaN(+rounds) == false) {
-            isRoundsValid = true;
-            console.log(`So you want to play ${rounds} rounds, huh?`);
-            return +rounds;
-        }
+    if (roundsInput.value <= 0) {
+        roundsInputErrorElement.classList.remove("hidden");
+        roundsInputErrorElement.textContent = "Please select a number greater than 0. >:("
+    } else {
+        roundsInputErrorElement.classList.add("hidden");
+        console.log(`roundsInput's value = ${roundsInput.value}`);
+        return roundsInput.value;
     }
 }
 
