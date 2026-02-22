@@ -23,8 +23,17 @@ const totalRoundsElement = document.querySelector(".total-rounds");
 // RPS HTML
 const rpsContainer = document.querySelector(".rps-container")
 const rockButton = document.querySelector(".rock");
+rockButton.addEventListener("click", () => {
+    console.log("You clicked rock!");
+});
 const paperButton = document.querySelector(".paper");
+paperButton.addEventListener("click", () => {
+    console.log("You clicked paper!");
+});
 const scissorsButton = document.querySelector(".scissors");
+scissorsButton.addEventListener("click", () => {
+    console.log("You clicked scissors!");
+});
 
 // Scores HTML
 const playerScoreElement = document.querySelector(".player-score");
@@ -39,10 +48,16 @@ const computerChoiceElement = document.querySelector(".computer-choice");
 const resultContainer = document.querySelector(".result-container");
 const resultElement = document.querySelector(".result");
 const nextRoundButton = document.querySelector(".next-round");
+nextRoundButton.addEventListener("click", () => {
+    console.log("You clicked next round!");
+});
 
 // // Game Over HTML
 const gameResultElement = document.querySelector(".game-result");
 const newGameButton = document.querySelector(".new-game");
+newGameButton.addEventListener("click", () => {
+    console.log("You clicked new game!");
+});
 
 // Universal variables
 let totalRounds;
