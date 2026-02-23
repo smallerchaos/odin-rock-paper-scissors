@@ -1,7 +1,14 @@
 # odin-rock-paper-scissors
 Rock Paper Scissors project from The Odin Project
 
-## Learnings and Reflections
+Project can be accessed from: https://smallerchaos.github.io/odin-rock-paper-scissors/
+
+## Learnings and Reflections from V2 (HTML UI only)
+I found that having buttons kick off each of the steps in the game greatly simplified the code necessary for the game. I also floundered a lot at the beginning since I couldn't really figure out how to structure the JS file in a logical manner (e.g. what functions/functionality should be available when). I also tried to inject all of the HTML via JavaScript at first but that made it so much more confusing for me to remember what the HTML structure was supposed to be so I ended up moving the entirety of the HTML into a separate HTML file and adding or removing a 'hidden' class as necessary. (Perhaps this can be considered a separation of concerns in a positive way?) This ended up making it a lot easier for me to make progress on the project and figure out what parts to show at what stage in the game.
+
+Overall, I'm pretty happy with how it turned out. I'm still going a bit above and beyond by allowing the user to set the number of rounds and then start a new game but I'm happy I was able to get that to work. :)
+
+## Learnings and Reflections from V1 (pure JS)
 I think I definitely went beyond the scope of the project a bit by:
 1. Trying to eliminate all external variables (which might be why some of my recursive functions don't work) since I read somewhere that it's best to reduce the number of global variables for security reasons.
 2. Trying to work on treating cases when users don't input valid choice (of rock, paper, or scissors) or a valid number for rounds.
