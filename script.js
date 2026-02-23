@@ -1,9 +1,6 @@
 // Note: rock, paper, scissors henceforth referred to as "rps"
 
-// IF Javascript is enabled, remove the no Javascript text.
-const body = document.querySelector("body");
-const noJs = document.getElementById("no-javascript");
-noJs.remove();
+// ---------- Variables ---------- //
 
 // HTML Elements variables
 // Get rounds HTML
@@ -11,13 +8,10 @@ noJs.remove();
 const getRoundsContainer = document.querySelector(".get-rounds-container")
 const roundsInput = document.querySelector(".rounds-input");
 const submitRoundsButton = document.querySelector(".submit-rounds");
-submitRoundsButton.addEventListener("click", (event) => {
-    totalRounds = getNumberOfRounds();
-    console.log(`totalRounds = ${totalRounds}`);
-});
 const roundsInputErrorElement = document.querySelector(".get-rounds-container .error-message");
 
 // // Display rounds HTML
+const gameInfoContainer = document.querySelector(".game-info-container");
 const roundsContainer = document.querySelector(".rounds-container");
 const currentRoundElement = document.querySelector(".current-round");
 const totalRoundsElement = document.querySelector(".total-rounds");
@@ -25,17 +19,8 @@ const totalRoundsElement = document.querySelector(".total-rounds");
 // RPS HTML
 const rpsContainer = document.querySelector(".rps-container")
 const rockButton = document.querySelector(".rock");
-rockButton.addEventListener("click", () => {
-    console.log("You clicked rock!");
-});
 const paperButton = document.querySelector(".paper");
-paperButton.addEventListener("click", () => {
-    console.log("You clicked paper!");
-});
 const scissorsButton = document.querySelector(".scissors");
-scissorsButton.addEventListener("click", () => {
-    console.log("You clicked scissors!");
-});
 
 // Scores HTML
 const playerScoreElement = document.querySelector(".player-score");
@@ -63,46 +48,73 @@ newGameButton.addEventListener("click", () => {
 
 // Universal variables
 let totalRounds;
+let runningScore = [];
+let playerChoice;
+let computerChoice;
+
+// ---------- Logic ---------- //
+
+// IF Javascript is enabled, remove the no Javascript text and show the beginning of the game.
+const body = document.querySelector("body");
+const noJs = document.getElementById("no-javascript");
+noJs.remove();
 getRoundsContainer.classList.toggle("hidden");
 
 // GET total rounds logic
+// CLICK submit round -> show rps
+submitRoundsButton.addEventListener("click", (event) => {
+    getNumberOfRounds();
+});
+
 function getNumberOfRounds () {
     if (roundsInput.value <= 0) {
+        roundsInputErrorElement.textContent = "Please select a number greater than 0. >:(";
+
         roundsInputErrorElement.classList.remove("hidden");
-        roundsInputErrorElement.textContent = "Please select a number greater than 0. >:("
     } else {
+        totalRounds = roundsInput.value;
+        totalRoundsElement.textContent = totalRounds;
+        currentRoundElement.textContent = 1;
+
         roundsInputErrorElement.classList.add("hidden");
-        console.log(`roundsInput's value = ${roundsInput.value}`);
-        return roundsInput.value;
+        getRoundsContainer.classList.add("hidden");
+        gameInfoContainer.classList.remove("hidden");
+        rpsContainer.classList.remove("hidden");
     }
 }
 
+// CLICK rps choice -> show round results
+rockButton.addEventListener("click", () => {
+    getPlayerChoice("rock");
+});
+paperButton.addEventListener("click", () => {
+    getPlayerChoice("paper");
+});
+scissorsButton.addEventListener("click", () => {
+    getPlayerChoice("scissors");
+});
+
+function getPlayerChoice (choice) {
+    playerChoice = choice;
+    playerChoiceElement.textContent = choice;
+    computerChoice = setComputerChoice();
+    computerChoiceElement.textContent = computerChoice;
+
+    rpsContainer.classList.add("hidden");
+    choiceContainer.classList.remove("hidden");
+}
+
+
 // DISPLAY rounds in UI
-// function initiateDisplayRounds() {
-//     getRounds.remove();
+function startGame() {
+    // getRounds.remove();
+    getRoundsContainer.classList.add("hidden");
+    totalRoundsElement.textContent = totalRounds;
 
-//     const displayRoundsTitle = document.createElement("h2");
-//     displayRoundsTitle.textContent = "Rounds";
-//     displayRounds.appendChild(displayRoundsTitle);
-
-//     const roundsCountainer = document.createElement("div");
-//     roundsCountainer.className = "rounds-container";
-
-//     current.textContent = 1;
-//     roundsCountainer.appendChild(current);
-
-//     const ofText = document.createElement("span");
-//     ofText.textContent = " of ";
-//     roundsCountainer.appendChild(ofText);
-
-//     total.textContent = totalRounds;
-//     roundsCountainer.appendChild(total);
-
-//     displayRounds.appendChild(roundsCountainer);
-//     body.appendChild(displayRounds);
-
-//     getPlayerChoice();
-// }
+    gameInfoContainer.classList.remove("hidden");
+    console.log(`we got the player's choice and it's ${getPlayerChoice()}`);
+    // getPlayerChoice();
+}
 
 
 // SET computer choice of rps
@@ -124,38 +136,40 @@ function setComputerChoice () {
 }
 
 // GET player choice for rps
-function getPlayerChoice () {
-    let choice;
+// function getPlayerChoice () {
+    // let choice;
     
-    const rockButton = document.createElement("button");
-    rockButton.textContent = "Rock";
-    rockButton.addEventListener("click", () => {
-        console.log(`you clicked rock`);
-        choice = "rock";
-        console.log(`your choice is ${choice}`);
-    });
-    rpsContainer.appendChild(rockButton);
+    // rpsContainer.classList.remove("hidden");
 
-    const paperButton = document.createElement("button");
-    paperButton.textContent = "Paper";
-    paperButton.addEventListener("click", () => {
-        console.log(`you clicked paper`);
-        choice = "paper";
-        console.log(`your choice is ${choice}`);
-    });
-    rpsContainer.appendChild(paperButton);
+    // const rockButton = document.createElement("button");
+    // rockButton.textContent = "Rock";
+    // rockButton.addEventListener("click", () => {
+    //     console.log(`you clicked rock`);
+    //     choice = "rock";
+    //     console.log(`your choice is ${choice}`);
+    // });
+    // rpsContainer.appendChild(rockButton);
 
-    const scissorsButton = document.createElement("button");
-    scissorsButton.textContent = "Scissors";
-    scissorsButton.addEventListener("click", () => {
-        console.log(`you clicked scissors`);
-        choice = "scissors";
-        console.log(`your choice is ${choice}`);
-    });
-    rpsContainer.appendChild(scissorsButton);
+    // const paperButton = document.createElement("button");
+    // paperButton.textContent = "Paper";
+    // paperButton.addEventListener("click", () => {
+    //     console.log(`you clicked paper`);
+    //     choice = "paper";
+    //     console.log(`your choice is ${choice}`);
+    // });
+    // rpsContainer.appendChild(paperButton);
 
-    body.appendChild(rpsContainer);
-}
+    // const scissorsButton = document.createElement("button");
+    // scissorsButton.textContent = "Scissors";
+    // scissorsButton.addEventListener("click", () => {
+    //     console.log(`you clicked scissors`);
+    //     choice = "scissors";
+    //     console.log(`your choice is ${choice}`);
+    // });
+    // rpsContainer.appendChild(scissorsButton);
+
+    // body.appendChild(rpsContainer);
+// }
 
 // DETERMINE if computer or player wins
 function didPlayerWin(playerChoice, computerChoice) {
@@ -246,3 +260,13 @@ function game (winner) {
 // runRounds(getNumberOfRounds());
 
 // initiateGetRounds();
+
+
+
+
+
+
+
+// CLICK next round -> show rps
+
+// CLICK new game -> show getRounds
