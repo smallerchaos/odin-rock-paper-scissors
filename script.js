@@ -38,11 +38,9 @@ const nextRoundButton = document.querySelector(".next-round");
 
 
 // // Game Over HTML
+const gameResultContainer = document.querySelector(".game-result-container");
 const gameResultElement = document.querySelector(".game-result");
 const newGameButton = document.querySelector(".new-game");
-newGameButton.addEventListener("click", () => {
-    console.log("You clicked new game!");
-});
 
 // Universal variables
 let currentRound = 1;
@@ -60,7 +58,6 @@ const noJs = document.getElementById("no-javascript");
 noJs.remove();
 getRoundsContainer.classList.toggle("hidden");
 
-// GET total rounds logic
 // CLICK submit round -> show rps
 submitRoundsButton.addEventListener("click", (event) => {
     getNumberOfRounds();
@@ -81,6 +78,7 @@ function getNumberOfRounds () {
         gameInfoContainer.classList.remove("hidden");
         rpsContainer.classList.remove("hidden");
     }
+    roundsInput.value = "";
 }
 
 // CLICK rps choice -> show round results
@@ -124,10 +122,7 @@ function setComputerChoice () {
 }
 
 function roundResult () {
-    console.log(`currentRound = ${currentRound}, totalRounds = ${totalRounds} and currentRound === totalRounds = ${currentRound == totalRounds}`);
-    if (currentRound == totalRounds) {
-        console.log(`game over bro`);
-    } else if (playerChoice === computerChoice) {
+    if (playerChoice === computerChoice) {
         // If it's a tie
         resultElement.textContent = "It's a tie!";
         nextRoundButton.classList.add("hidden");
@@ -143,35 +138,40 @@ function roundResult () {
             choiceContainer.classList.add("hidden");
             rpsContainer.classList.remove("hidden");
         });
+
+        resultContainer.classList.remove("hidden");
+
     } else if (playerChoice == `rock` && computerChoice == `scissors` ||
     playerChoice == `paper` && computerChoice == `rock` ||
     playerChoice == `scissors` && computerChoice == `paper`) {
         // IF player wins
         playerScore += 1;
         playerScoreElement.textContent = playerScore;
-        console.log(`playerScore now = ${playerScore}`);
 
-        resultElement.textContent = "You won!";
-
-        if ((playerScore + computerScore) === totalRounds) {
+        if ((playerScore + computerScore) == totalRounds) {
             // If that was the last round
-            console.log(`playerScore = ${playerScore} and computerScore = ${computerScore} and totalScore = ${totalScore} so game over.`);
-            // gameResults(); 
+            gameResult(); 
         } else {
-            nextRoundButton.textContent = "Next round";
+            resultElement.textContent = "You won!";
+            resultContainer.classList.remove("hidden");
         }
-        resultContainer.classList.remove("hidden");
 
     } else {
         // ELSE computer won
         computerScore += 1;
         computerScoreElement.textContent = computerScore;
-        console.log(`computerScore now = ${computerScore}`);
-    }
 
-    resultContainer.classList.remove("hidden");
+        if ((playerScore + computerScore) == totalRounds) {
+            // If that was the last round
+            gameResult();
+        } else {
+            resultElement.textContent = "The computer won!";
+            resultContainer.classList.remove("hidden");
+        }
+    }
 }
 
+// Start next round
 nextRoundButton.addEventListener("click", () => {
     currentRound += 1;
     currentRoundElement.textContent = currentRound;
@@ -181,152 +181,32 @@ nextRoundButton.addEventListener("click", () => {
     rpsContainer.classList.remove("hidden");
 });
 
-// gameResults
+// DETERMINE who won the game overall
+function gameResult () {
+    resultContainer.classList.add("hidden");
+    gameResultContainer.classList.remove("hidden");
 
-// DISPLAY rounds in UI
-// function startGame() {
-//     // getRounds.remove();
-//     getRoundsContainer.classList.add("hidden");
-//     totalRoundsElement.textContent = totalRounds;
-
-//     gameInfoContainer.classList.remove("hidden");
-//     console.log(`we got the player's choice and it's ${getPlayerChoice()}`);
-//     // getPlayerChoice();
-// }
-
-
-// GET player choice for rps
-// function getPlayerChoice () {
-    // let choice;
-    
-    // rpsContainer.classList.remove("hidden");
-
-    // const rockButton = document.createElement("button");
-    // rockButton.textContent = "Rock";
-    // rockButton.addEventListener("click", () => {
-    //     console.log(`you clicked rock`);
-    //     choice = "rock";
-    //     console.log(`your choice is ${choice}`);
-    // });
-    // rpsContainer.appendChild(rockButton);
-
-    // const paperButton = document.createElement("button");
-    // paperButton.textContent = "Paper";
-    // paperButton.addEventListener("click", () => {
-    //     console.log(`you clicked paper`);
-    //     choice = "paper";
-    //     console.log(`your choice is ${choice}`);
-    // });
-    // rpsContainer.appendChild(paperButton);
-
-    // const scissorsButton = document.createElement("button");
-    // scissorsButton.textContent = "Scissors";
-    // scissorsButton.addEventListener("click", () => {
-    //     console.log(`you clicked scissors`);
-    //     choice = "scissors";
-    //     console.log(`your choice is ${choice}`);
-    // });
-    // rpsContainer.appendChild(scissorsButton);
-
-    // body.appendChild(rpsContainer);
-// }
-
-// DETERMINE if computer or player wins
-// function didPlayerWin(playerChoice, computerChoice) {
-
-//     // IF there is a tie, THEN start over with SET computer choice and OBTAIN player choice
-//     // This recursive function also doesn't work so let's assume you don't get a tie because, for some reason, the score returns [0,0,0] when you get a tie...
-//     if (playerChoice == computerChoice) {
-//         alert(`You chose ${playerChoice} and computer also chose ${computerChoice}. It's a tie! Try again.`)
-//         console.log(`It's a tie!`)
-//         didPlayerWin(getPlayerChoice(),setComputerChoice());
-
-//     // ELSEIF player choice wins computer choice, return true
-//     } else if (playerChoice == `rock` && computerChoice == `scissors` ||
-//     playerChoice == `paper` && computerChoice == `rock` ||
-//     playerChoice == `scissors` && computerChoice == `paper`) {
-//         alert(`Computer chose ${computerChoice}. You win!`)
-//         console.log(`You won!`)
-//         return true;
-    
-//     // ELSE if player didn't win and it isn't a tie, then computer won
-//     } else {
-//         alert(`Computer chose ${computerChoice}. Computer won. :(`)
-//         console.log(`Computer won`);
-//         return false;
-//     }
-//     // ENDIF
-// }
-
-// runRounds(getNumberOfRounds(), game(didPlayerWin(getPlayerChoice(),setComputerChoice())));
-
-// DETERMINE if another game needs to be run in order to fulfill the number of rounds OBTAINED from user
-function runRounds (rounds) {
-    console.log(`Starting runRounds`);
-    const totalRounds = rounds;
-    let isGameOver = false;
-    let playerScore = 0;
-    let computerScore = 0;
-    let totalScore = 0;
-    let gameOutcome;
-
-    // WHILE the number of requisite rounds is not fulfilled, run games
-    while (isGameOver == false) {
-        gameOutcome = game(didPlayerWin(getPlayerChoice(),setComputerChoice()));
-        playerScore += gameOutcome[0];
-        computerScore += gameOutcome[1];
-        totalScore += gameOutcome[0] + gameOutcome[1];
-        console.log(`In runRounds, gameOtucome = ${gameOutcome}, playerScore = ${playerScore}, computerScore = ${computerScore}, totalScore = ${totalScore}`);
-
-        console.log(`isGameOver = ${isGameOver}`);
-        // IF the totalScore (computer + player scores = number of rounds) < requisite rounds, continue running games
-        if (totalScore < totalRounds) {
-            console.log(`total Score in if runRounds = ${totalScore}`);
-            isGameOver = false;
-            console.log(`Keep going! playerScore < gameScore in runRounds`);
-        
-        // ELSE totalScore = requisite rounds, so you can stop running games
-        } else {
-            isGameOver = true;
-            console.log(`Bro, it's over. playerScore >= gameScore in runRounds`);
-        }
-    } ;
-}
-
-// COMPUTE the computer and player score from a single game
-function game (winner) {
-    console.log(`Starting game...`)
-    let playerScore = 0;
-    let computerScore = 0;
-
-    // IF true, add score to player
-    if (winner == true) {
-        playerScore ++;
-        console.log(`playerScore in game = ${playerScore}`);
-    } 
-    // ELSE IF false, add score to computer
-    else if (winner == false) {
-        computerScore ++;
-        console.log(`computerScore in game = ${computerScore}`);
+    if (playerScore > computerScore) {
+        gameResultElement.textContent = "You won the game!";
+    } else if (playerScore < computerScore) {
+        gameResultElement.textContent = "The computer won the game. ;_;";
+    } else if (playerScore == computerScore) {
+        gameResultElement.textContent = "The game was a tie...";
     }
-    //´ENDIF
-
-    // RETURN computer score and player score
-    const scores = [playerScore, computerScore];
-    console.log(`Game finished. Score = ${scores} with type of ${typeof(scores)}`);
-    return scores;
 }
 
-// runRounds(getNumberOfRounds());
+// CLICK new game -> start new game
+newGameButton.addEventListener("click", () => {
+    // Reset the game information
+    totalRounds = 0;
+    currentRound = 1;
+    playerScore = 0;
+    computerScore = 0;
 
-// initiateGetRounds();
-
-
-
-
-
-
-
-// CLICK next round -> show rps
-
-// CLICK new game -> show getRounds
+    // Hide game UI and show starting UI
+    gameInfoContainer.classList.add("hidden");
+    choiceContainer.classList.add("hidden");
+    resultContainer.classList.add("hidden");
+    gameResultContainer.classList.add("hidden");
+    getRoundsContainer.classList.remove("hidden");
+});
